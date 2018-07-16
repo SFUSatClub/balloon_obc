@@ -24,7 +24,7 @@ void useInterrupt(boolean); // Func prototype keeps Arduino 0023 happy
 
 //HUMIDITY N TEMP STARTS HERE
 #include <SparkFunHTU21D.h>
-#include "SparkFun_Si7021_Breakout_Library.h"
+#include <SparkFun_Si7021_Breakout_Library.h>
 #include <Wire.h>
 
 float humidity = 0;
