@@ -1,6 +1,6 @@
 
 //ADA GPS PARSING STARTS HERE
-#include <Adafruit_GPS.h>
+#include "src/Computing/Adafruit_GPS/Adafruit_GPS.h"
 #include <SoftwareSerial.h>
 
 Adafruit_GPS GPS(&Serial2);
@@ -23,8 +23,8 @@ void useInterrupt(boolean); // Func prototype keeps Arduino 0023 happy
 
 
 //HUMIDITY N TEMP STARTS HERE
-#include <SparkFunHTU21D.h>
-#include <SparkFun_Si7021_Breakout_Library.h>
+#include "src/Computing/SparkFunHTU21D/SparkFunHTU21D.h"
+#include "src/Computing/Si7021/SparkFun_Si7021_Breakout_Library.h"
 #include <Wire.h>
 
 float humidity = 0;
@@ -46,7 +46,7 @@ Weather sensor;
 
 #include <inttypes.h>
 #include <Wire.h>
-#include <lm75.h>
+#include "src/Computing/lm75/lm75.h"
 
 
 TempI2C_LM75 termo = TempI2C_LM75(0x48,TempI2C_LM75::nine_bits);
