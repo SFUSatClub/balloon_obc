@@ -3,13 +3,14 @@
 
 #include <Arduino.h>
 
+#define radioSerial Serial3
+
 class Radio
 {
-    private:
-        int theSerialPort;
     public:
-        Radio(int serialPort);
+        Radio();
         void init();
+        void tx(String data);
 };
 
 #endif
