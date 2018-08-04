@@ -7,6 +7,8 @@ uint32_t timer = millis();
 GPS::GPS()
 {
     GPS = new Adafruit_GPS(&gpsSerial);
+    longitude = 0;
+    latitude = 0;
 }
 
 void GPS::init()
@@ -21,22 +23,22 @@ void GPS::init()
     GPS->sendCommand(PGCMD_ANTENNA);
 }
 
-void GPS::useInterrupt(boolean v)
+void GPS::useInterrupt(bool v)
 {
-  if (v)
-  {
-    // Timer0 is already used for millis() - we'll just interrupt somewhere
-    // in the middle and call the "Compare A" function above
-    OCR0A = 0xAF;
-    TIMSK0 |= _BV(OCIE0A);
-    usingInterrupt = true;
-  }
-  else
-  {
-    // do not call the interrupt function COMPA anymore
-    TIMSK0 &= ~_BV(OCIE0A);
-    usingInterrupt = false;
-  }
+    if (v)
+    {
+        // Timer0 is already used for millis() - we'll just interrupt somewhere
+        // in the middle and call the "Compare A" function above
+        OCR0A = 0xAF;
+        TIMSK0 |= _BV(OCIE0A);
+        usingInterrupt = true;
+    }
+    else
+    {
+        // do not call the interrupt function COMPA anymore
+        TIMSK0 &= ~_BV(OCIE0A);
+        usingInterrupt = false;
+    }
 }
 
 void GPS::getVersion()
@@ -52,11 +54,11 @@ char GPS::read()
 
 void GPS::tick()
 {
-    if (! usingInterrupt)
+    if (!usingInterrupt)
     {
         char c = GPS->read();
         if (GPSECHO)
-        if (c) Serial.print(c);
+            if (c) Serial.print(c);
     }
 
     if (GPS->newNMEAreceived())
@@ -65,13 +67,17 @@ void GPS::tick()
         return;  // we can fail to parse a sentence in which case we should just wait for another
     }
 
-    if (timer > millis())  timer = millis();
+    if (timer > millis()) timer = millis();
 
     // approximately every 2 seconds or so, print out the current stats
     if (millis() - timer > 2000)
     {
         timer = millis(); // reset the timer
 
+        GPS->longitudeDegrees = longitude;
+        GPS->latitudeDegrees = latitude;
+
+        // This will all be removed after we finish debugging with USB logger
         Serial.print("\nTime: ");
         Serial.print(GPS->hour, DEC); Serial.print(':');
         Serial.print(GPS->minute, DEC); Serial.print(':');
@@ -102,7 +108,16 @@ void GPS::tick()
     }
 }
 
-void GPS::getCoords()
+float GPS::getLongitude()
+{
+    return longitude;
+}
+float GPS::getLatitude()
+{
+    return latitude;
+}
+
+void GPS::printCoords()
 {
     Serial.print("\nImportant Stuff: \n");
     Serial.print(GPS->latitudeDegrees, 4);
