@@ -1,7 +1,6 @@
 #include <SoftwareSerial.h>
 #include <Wire.h>
 #include <inttypes.h>
-#include <Wire.h>
 #include "src/Computing/GPS.h"
 #include "src/Computing/HTU.h"
 #include "src/Computing/TempSensor.h"
@@ -40,7 +39,7 @@ void loop() {
 
   gps.tick();
   delay(3000);
-  gps.getCoords();
+  gps.printCoords();
   
   Serial.print("\nHumid and Temp: \n");
   
