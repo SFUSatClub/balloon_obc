@@ -47,7 +47,7 @@ int SDcard::createFile(char filename[])
 
 
 
-int SDcard->writeToFile(char text[])
+int SDcard::writeToFile(char text[])
 {
   if (file)
   {
@@ -64,7 +64,7 @@ int SDcard->writeToFile(char text[])
 
 
 
-void SDcard->closeFile()
+void SDcard::closeFile()
 {
   if (file)
   {
@@ -75,7 +75,7 @@ void SDcard->closeFile()
 
 
 
-int SDcard->openFile(char filename[])
+int SDcard::openFile(char filename[])
 {
   file = SD.open(filename);
   if (file)
@@ -90,7 +90,7 @@ int SDcard->openFile(char filename[])
 }
 
 
-String SDcard->readLine()
+String SDcard::readLine()
 {
   String received = "";
   char ch;
