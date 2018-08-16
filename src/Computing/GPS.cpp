@@ -121,6 +121,6 @@ void GPS::printCoords()
 {
     Serial.print("\nImportant Stuff: \n");
     Serial.print(longitude, 4);
-    Serial.print(", ");
+    Serial.print(" ");
     Serial.println(latitude, 4);
 }

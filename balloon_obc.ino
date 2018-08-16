@@ -4,10 +4,14 @@
 #include "src/Computing/GPS.h"
 #include "src/Computing/HTU.h"
 #include "src/Computing/TempSensor.h"
+#include "src/Radio/Radio.h"
 
 GPS gps;
 HTU htu;
 TempSensor lm75;
+Radio radio;
+
+String coords;
 
 void setup() {
   
@@ -19,6 +23,7 @@ void setup() {
   gps.getVersion();
   htu.init();
   lm75.init();
+  coords = "\0";
 }
 
 // Interrupt is called once a millisecond, looks for any new GPS data, and stores it
@@ -51,4 +56,9 @@ void loop() {
  
   lm75.tick();
   delay(3000);
+
+  coords = (String)gps.getLatitude() + " ";
+  coords = coords + (String)gps.getLongitude();
+  radio.tx(coords);
+  delay(8000);
 }
