@@ -11,6 +11,7 @@ class TempSensor
         TempSensor();
         void init();
         void tick();
+        String tempValue();
 };
 
 #endif

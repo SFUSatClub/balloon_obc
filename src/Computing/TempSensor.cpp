@@ -57,3 +57,10 @@ void TempSensor::tick()
     Serial.print(termo->getTemp());
     Serial.println(" oC");
 }
+
+String TempSensor::tempValue()
+{
+String value;
+value = termo->getTemp();
+return value;
+}

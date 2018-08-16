@@ -60,34 +60,34 @@ void setup() {
     return;
   }
   
-  // Create/Open file 
-  myFile = SD.open("test.txt", FILE_WRITE);
-  
-  // if the file opened okay, write to it:
-  if (myFile) {
-    Serial.println("Writing to file...");
-    // Write to file
-    myFile.println("Testing text 1, 2 ,3...");
-    myFile.close(); // close the file
-    Serial.println("Done.");
-  }
-  // if the file didn't open, print an error:
-  else {
-    Serial.println("error opening test.txt");
-  }
-  // Reading the file
-  myFile = SD.open("test.txt");
-  if (myFile) {
-    Serial.println("Read:");
-    // Reading the whole file
-    while (myFile.available()) {
-      Serial.write(myFile.read());
-   }
-    myFile.close();
-  }
-  else {
-    Serial.println("error opening test.txt");
-  }
+//  // Create/Open file 
+//  myFile = SD.open("test.txt", FILE_WRITE);
+//  
+//  // if the file opened okay, write to it:
+//  if (myFile) {
+//    Serial.println("Writing to file...");
+//    // Write to file
+//    myFile.println("Testing text 1, 2 ,3...");
+//    myFile.close(); // close the file
+//    Serial.println("Done.");
+//  }
+//  // if the file didn't open, print an error:
+//  else {
+//    Serial.println("error opening test.txt");
+//  }
+//  // Reading the file
+//  myFile = SD.open("test.txt");
+//  if (myFile) {
+//    Serial.println("Read:");
+//    // Reading the whole file
+//    while (myFile.available()) {
+//      Serial.write(myFile.read());
+//   }
+//    myFile.close();
+//  }
+//  else {
+//    Serial.println("error opening test.txt");
+//  }
 
 }
 
@@ -121,6 +121,40 @@ void loop() {
  
   lm75.tick();
   delay(3000);
+
+
+
+ // Create/Open file 
+  myFile = SD.open("test.txt", FILE_WRITE);
+  
+  // if the file opened okay, write to it:
+  if (myFile) {
+    Serial.println("Writing to file...");
+    // Write to file
+    myFile.println(lm75.tempValue());
+    myFile.close(); // close the file
+    Serial.println("Done.");
+  }
+  // if the file didn't open, print an error:
+  else {
+    Serial.println("error opening test.txt");
+  }
+  
+  // Reading the file
+  Serial.print("NOW READING FILE -----");
+  myFile = SD.open("test.txt");
+  if (myFile) {
+    Serial.println("Read:");
+    // Reading the whole file
+    while (myFile.available()) {
+      Serial.write(myFile.read());
+   }
+    myFile.close();
+  }
+  else {
+    Serial.println("error opening test.txt");
+  }
+  Serial.print("DONE READING FILE -----");
 
 
 }
