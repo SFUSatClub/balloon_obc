@@ -6,21 +6,21 @@ uint32_t timer = millis();
 
 GPS::GPS()
 {
-    GPS = new Adafruit_GPS(&gpsSerial);
+    Ada_GPS = new Adafruit_GPS(&gpsSerial);
     longitude = 0;
     latitude = 0;
 }
 
 void GPS::init()
 {
-    GPS->begin(9600);
+    Ada_GPS->begin(9600);
 
     // Turn on RMC (recommended minimum) and GGA (fix data) including altitude
-    GPS->sendCommand(PMTK_SET_NMEA_OUTPUT_RMCGGA);
+    Ada_GPS->sendCommand(PMTK_SET_NMEA_OUTPUT_RMCGGA);
     // Set the update rate
-    GPS->sendCommand(PMTK_SET_NMEA_UPDATE_1HZ);
+    Ada_GPS->sendCommand(PMTK_SET_NMEA_UPDATE_1HZ);
     // Request updates on antenna status, comment out to keep quiet
-    GPS->sendCommand(PGCMD_ANTENNA);
+    Ada_GPS->sendCommand(PGCMD_ANTENNA);
 }
 
 void GPS::useInterrupt(bool v)
@@ -49,21 +49,21 @@ void GPS::getVersion()
 
 char GPS::read()
 {
-    return GPS->read();
+    return Ada_GPS->read();
 }
 
 void GPS::tick()
 {
     if (!usingInterrupt)
     {
-        char c = GPS->read();
+        char c = Ada_GPS->read();
         if (GPSECHO)
             if (c) Serial.print(c);
     }
 
-    if (GPS->newNMEAreceived())
+    if (Ada_GPS->newNMEAreceived())
     {
-        if (!GPS->parse(GPS->lastNMEA()))   // this also sets the newNMEAreceived() flag to false
+        if (!Ada_GPS->parse(Ada_GPS->lastNMEA()))   // this also sets the newNMEAreceived() flag to false
         return;  // we can fail to parse a sentence in which case we should just wait for another
     }
 
@@ -74,36 +74,36 @@ void GPS::tick()
     {
         timer = millis(); // reset the timer
 
-        GPS->longitudeDegrees = longitude;
-        GPS->latitudeDegrees = latitude;
+        longitude = Ada_GPS->longitudeDegrees;
+        latitude = Ada_GPS->latitudeDegrees;
 
         // This will all be removed after we finish debugging with USB logger
         Serial.print("\nTime: ");
-        Serial.print(GPS->hour, DEC); Serial.print(':');
-        Serial.print(GPS->minute, DEC); Serial.print(':');
-        Serial.print(GPS->seconds, DEC); Serial.print('.');
-        Serial.println(GPS->milliseconds);
+        Serial.print(Ada_GPS->hour, DEC); Serial.print(':');
+        Serial.print(Ada_GPS->minute, DEC); Serial.print(':');
+        Serial.print(Ada_GPS->seconds, DEC); Serial.print('.');
+        Serial.println(Ada_GPS->milliseconds);
         Serial.print("Date: ");
-        Serial.print(GPS->day, DEC); Serial.print('/');
-        Serial.print(GPS->month, DEC); Serial.print("/20");
-        Serial.println(GPS->year, DEC);
-        Serial.print("Fix: "); Serial.print((int)GPS->fix);
-        Serial.print(" quality: "); Serial.println((int)GPS->fixquality);
-        if (GPS->fix)
+        Serial.print(Ada_GPS->day, DEC); Serial.print('/');
+        Serial.print(Ada_GPS->month, DEC); Serial.print("/20");
+        Serial.println(Ada_GPS->year, DEC);
+        Serial.print("Fix: "); Serial.print((int)Ada_GPS->fix);
+        Serial.print(" quality: "); Serial.println((int)Ada_GPS->fixquality);
+        if (Ada_GPS->fix)
         {
             Serial.print("Location: ");
-            Serial.print(GPS->latitude, 4); Serial.print(GPS->lat);
+            Serial.print(Ada_GPS->latitude, 4); Serial.print(Ada_GPS->lat);
             Serial.print(", ");
-            Serial.print(GPS->longitude, 4); Serial.println(GPS->lon);
+            Serial.print(Ada_GPS->longitude, 4); Serial.println(Ada_GPS->lon);
             Serial.print("Location (in degrees, works with Google Maps): ");
-            Serial.print(GPS->latitudeDegrees, 4);
+            Serial.print(Ada_GPS->latitudeDegrees, 4);
             Serial.print(", ");
-            Serial.println(GPS->longitudeDegrees, 4);
+            Serial.println(Ada_GPS->longitudeDegrees, 4);
 
-            Serial.print("Speed (knots): "); Serial.println(GPS->speed);
-            Serial.print("Angle: "); Serial.println(GPS->angle);
-            Serial.print("Altitude: "); Serial.println(GPS->altitude);
-            Serial.print("Satellites: "); Serial.println((int)GPS->satellites);
+            Serial.print("Speed (knots): "); Serial.println(Ada_GPS->speed);
+            Serial.print("Angle: "); Serial.println(Ada_GPS->angle);
+            Serial.print("Altitude: "); Serial.println(Ada_GPS->altitude);
+            Serial.print("Satellites: "); Serial.println((int)Ada_GPS->satellites);
         }
     }
 }
@@ -120,7 +120,7 @@ float GPS::getLatitude()
 void GPS::printCoords()
 {
     Serial.print("\nImportant Stuff: \n");
-    Serial.print(GPS->latitudeDegrees, 4);
+    Serial.print(longitude, 4);
     Serial.print(", ");
-    Serial.println(GPS->longitudeDegrees, 4);
+    Serial.println(latitude, 4);
 }

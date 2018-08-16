@@ -8,7 +8,7 @@
 class GPS
 {
     private:
-        Adafruit_GPS *GPS;
+        Adafruit_GPS *Ada_GPS;
         float longitude;
         float latitude;
         uint8_t hours, minutes, seconds;
