@@ -12,6 +12,9 @@ void Radio::init()
     tncSerial.print("MYCALL VA7KSX\n");
     delay(50);
     tncSerial.print("POSITION GPS\n");
+    delay(50);
+    tncSerial.print("ALTITUDE ON\n");
+    delay(50);
 }
 
 // Transmits APRS packet
