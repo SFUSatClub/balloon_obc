@@ -1,5 +1,7 @@
 #include "GPS.h"
-#include "../Radio.h"
+#include "../Radio/Radio.h"
+
+int timer = 0;
 
 GPS::GPS()
 {
