@@ -1,8 +1,9 @@
-#include <Arduino.h>
 #include "GPS.h"
+#include "../Radio.h"
 
 GPS::GPS()
 {
+    position = "\0";
     longitude = 0;
     latitude = 0;
 }
@@ -21,7 +22,30 @@ void GPS::tick()
     {
         timer = millis(); // reset the timer
 
-        // This is a stub. Include code to read GPS coordinates from the TNC
+        // This reads gps coordinates from the TNC and sets it as the current
+        // position. This is in DMS format, will later add conversion to DD
+        // format (for google maps purposes)
+        tncSerial.print("POSITION\n");
+        delay(50);
+        while(tncSerial.available())
+        {
+            int inChar = Serial.read();
+            if (isDigit(inChar) || (char)inChar == '.')
+            {
+                position += (char)inChar;
+            }
+            else if ((char)inChar == 'N')
+            {
+                latitude = position.toFloat();
+                position = "\0";
+            }
+            else if ((char)inChar == 'W')
+            {
+                longitude = position.toFloat();
+                position = "\0";
+            }
+
+        }
     }
 }
 
