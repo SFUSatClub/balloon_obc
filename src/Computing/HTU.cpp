@@ -33,3 +33,13 @@ void HTU::printInfo()
     Serial.print(humidity);
     Serial.println("%");
 }
+
+float HTU::getTemp()
+{
+        return temp;
+}
+
+float HTU::getHumidity()
+{
+        return humidity;
+}

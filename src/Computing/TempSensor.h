@@ -7,10 +7,12 @@ class TempSensor
 {
     private:
         TempI2C_LM75 *termo;
+
     public:
         TempSensor();
         void init();
         void tick();
+        float getTemp();
 };
 
 #endif
