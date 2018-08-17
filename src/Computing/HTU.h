@@ -10,11 +10,14 @@ class HTU
         float humidity;
         float temp;
         Weather *sensor;
+
     public:
         HTU();
         void init();
         void getWeather();
         void printInfo();
+        float getTemp();
+        float getHumidity();
 };
 
 #endif
