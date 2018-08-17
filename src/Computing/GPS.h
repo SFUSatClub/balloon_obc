@@ -1,14 +1,11 @@
 #ifndef GPS_H
 #define GPS_H
 
-#include "libraries/Adafruit_GPS/Adafruit_GPS.h"
-#define gpsSerial Serial2
-#define GPSECHO false
+#include <inttypes.h>
 
 class GPS
 {
     private:
-        Adafruit_GPS *Ada_GPS;
         float longitude;
         float latitude;
         uint8_t hours, minutes, seconds;
@@ -16,9 +13,6 @@ class GPS
     public:
         GPS();
         void init();
-        void useInterrupt(bool v);
-        void getVersion();
-        char read();
         void tick();
         float getLongitude();
         float getLatitude();
