@@ -15,6 +15,12 @@ void Radio::init()
     delay(50);
     tncSerial.print("ALTITUDE ON\n");
     delay(50);
+
+    // Clear incoming buffers
+    while(tncSerial.available())
+    {
+        tncSerial.read();
+    }
 }
 
 // Transmits APRS packet
@@ -28,4 +34,11 @@ void Radio::txPacket()
     tncSerial.print("BEACON\n");
     delay(1500);
     radioSerial.println("TX0");
+    delay(50);
+
+    // Clear incoming buffers
+    while(tncSerial.available())
+    {
+        tncSerial.read();
+    }
 }
