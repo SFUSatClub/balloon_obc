@@ -3,6 +3,7 @@
 
 #include <Arduino.h>
 
+#define tncSerial Serial
 #define radioSerial Serial3
 
 class Radio
@@ -10,7 +11,7 @@ class Radio
     public:
         Radio();
         void init();
-        void tx(String data);
+        void txPacket();
 };
 
 #endif

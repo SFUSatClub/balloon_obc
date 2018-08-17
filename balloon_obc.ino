@@ -48,26 +48,13 @@ HTU htu;
 TempSensor lm75;
 
 void setup() {
+  
+  Serial.begin(BAUD_ARDUINO); // set baud rate
 
-        //Serial.begin(115200); // TODO: dead code
-        Serial.begin(BAUD_ARDUINO); // set baud rate
-
-        /**
-         * GPS initialization
-         * TODO: should probably put all these into its own init
-         **************************************************/
-
-        gps.init();
-        gps.useInterrupt(true);
-        delay(DELAY_1S);
-        gps.getVersion();
-
-        /**
-         * HTU and Temperature sensor init
-         **************************************************/
-
-        htu.init();
-        lm75.init();
+  gps.init();
+  delay(DELAY_1S);
+  htu.init();
+  lm75.init();
 
         //Serial.begin(9600);
 
@@ -124,25 +111,6 @@ void setup() {
         //  }
 
 }
-
-/**
- * Interrupt is called once a millisecond, looks for any new GPS data, and stores it
- **************************************************/
-SIGNAL(TIMER0_COMPA_vect)
-{
-        char c = gps.read();
-        // if you want to debug, this is a good time to do it!
-
-#ifdef UDR0
-        if (GPSECHO && c) // TODO: if (c)
-                UDR0 = c;
-
-        // writing direct to UDR0 is much much faster than Serial.print
-        //      but only one character can be written at a time.
-#endif
-}
-
-
 
 void loop()
 {
