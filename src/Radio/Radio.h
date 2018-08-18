@@ -11,7 +11,6 @@ class Radio
     public:
         Radio();
         void init();
-        void txPacket();
 };
 
 #endif

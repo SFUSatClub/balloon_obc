@@ -15,7 +15,9 @@ void Radio::init()
     tncSerial.print("\n\n\n");
     delay(500);
     radioSerial.println("FS144390");
+    radioSerial.println("VL1");
     radioSerial.println("VX1");
+    radioSerial.println("PATH WIDE1-1");
 
     tncSerial.print("MYCALL VA7KSX\n");
     delay(50);
@@ -25,19 +27,8 @@ void Radio::init()
     delay(50);
     tncSerial.print("TXDELAY 150\n");
     delay(50);
+    tncSerial.print("INTERVAL 5\n");
 
-    // Clear incoming buffers
-    while(tncSerial.available())
-    {
-        tncSerial.read();
-    }
-}
-
-// Transmits APRS packet
-void Radio::txPacket()
-{
-    tncSerial.print("BEACON\n");
-    delay(1500);
     // Clear incoming buffers
     while(tncSerial.available())
     {
