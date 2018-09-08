@@ -51,6 +51,20 @@ void setup() {
   
   Serial.begin(BAUD_ARDUINO); // set baud rate
 
+  // Set digital pins to power sensors
+  pinMode(2, OUTPUT);
+  pinMode(3, OUTPUT);
+  pinMode(4, OUTPUT);
+  pinMode(5, OUTPUT);
+  pinMode(6, OUTPUT);
+  pinMode(7, OUTPUT);
+  digitalWrite(2, HIGH);
+  digitalWrite(3, HIGH);
+  digitalWrite(4, HIGH);
+  digitalWrite(5, LOW);
+  digitalWrite(6, LOW);
+  digitalWrite(7, LOW);
+
   gps.init();
   delay(DELAY_1S);
   htu.init();
@@ -150,7 +164,7 @@ void loop()
         // If the file didn't open, print an error:
         if (myFile) {
                 Serial.println("Writing to file...");
-                myFile.println(lm75.tempValue()); // Write to file
+        //        myFile.println(lm75.tempValue()); // Write to file
                 myFile.close();                   // Close the file
                 Serial.println("Done.");
         }
@@ -198,14 +212,14 @@ File createFile()
         }
 }
 
-void writeToFile()
+/*void writeToFile()
 {
         // Only write to the file if the file is actually open.
         if (f) {
-                f.print(/* your data here */)
+                f.print(/* your data here *//*)
                         f.close();
         }
-}
+}*/
 
 //SD Card function Definitions...
 //void initializeSD()
