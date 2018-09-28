@@ -16,8 +16,8 @@ class HTU
         void init();
         void getWeather();
         void printInfo();
-        float getTemp();
-        float getHumidity();
+        int get_HTU_Temperature();
+        int get_HTU_Humidity();
 };
 
 #endif

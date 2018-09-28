@@ -34,12 +34,12 @@ void HTU::printInfo()
     Serial.println("%");
 }
 
-float HTU::getTemp()
+int HTU::get_HTU_Humidity()
 {
-        return temp;
+        return sensor->getRH();
 }
 
-float HTU::getHumidity()
+int HTU::get_HTU_Temperature()
 {
-        return humidity;
+        return sensor->getTemp();
 }
